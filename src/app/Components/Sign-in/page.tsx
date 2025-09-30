@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-import Sidebar from '../app/Components/Sidebar/page';
+import Sidebar from '../Sidebar/page';
 import './globals.css';
 
 export default function Home() {

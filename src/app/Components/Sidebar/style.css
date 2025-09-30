@@ -1,0 +1,246 @@
+:root{
+  --bg:#0b0b0b;
+  --muted:#94a3b8;
+  --accent-start:#7c3aed; /* violet */
+  --accent-end:#06b6d4; /* teal */
+  --border:#1f2937;
+  --panel:#0f1724;
+}
+
+/* Shell wrapper ensures sidebar and content are side-by-side */
+.sidebar-shell{
+  display: flex;
+  min-height: 100vh;
+  background: #111827; /* matches bg-gray-900 */
+}
+.sidebar-shell main{ flex: 1 1 auto; }
+
+/* --- Sidebar layout --- */
+.sidebar{
+  width: 280px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, rgba(10,10,10,0.95), rgba(12,12,12,0.96));
+  border-right: 1px solid rgba(255,255,255,0.03);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+  color: #e6eef8;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Title */
+.finance {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+  color: white;
+  background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Menu list */
+.menu{
+  list-style:none;
+  padding: 0;
+  margin: 0;
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+/* Link row */
+.menu-link{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #e6eef8;
+  position: relative;
+  overflow: visible;
+  transition: background .18s ease, transform .12s ease;
+}
+
+/* Active left bar */
+.menu-link.active{
+  background: rgba(124,58,237,0.06);
+}
+.menu-link.active::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 6px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--accent-start), var(--accent-end));
+  box-shadow: 0 6px 16px rgba(124,58,237,0.12);
+}
+
+/* Icon wrap (circle/rounded square) */
+.icon-wrap{
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 4px 10px rgba(2,6,23,0.6);
+  flex-shrink: 0;
+  transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s, background .25s;
+}
+
+/* svg sizing */
+.icon{
+  width: 20px;
+  height: 20px;
+  color: var(--accent-start);
+  stroke: currentColor;
+  fill: none;
+  transition: transform .18s, color .18s, opacity .18s;
+}
+
+/* text & subtext */
+.link-text{
+  font-weight: 600;
+  display: block;
+}
+.link-sub{
+  margin-left: 8px;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.55);
+  display: none; /* keep off by default, remove if you want to show */
+}
+
+/* badge (small rounded pill) */
+.badge{
+  margin-left: auto;
+  background: linear-gradient(90deg,var(--accent-start),var(--accent-end));
+  color:white;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  border-radius: 999px;
+  font-weight:700;
+  box-shadow: 0 6px 18px rgba(6,182,212,0.06);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* chevron visible on hover */
+.chev{
+  margin-left: 8px;
+  opacity: 0;
+  transition: opacity .18s, transform .18s;
+  display: inline-grid;
+  place-items: center;
+}
+
+/* Hover + focus states */
+.menu-link:hover{
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.02);
+}
+.menu-link:hover .icon-wrap{
+  transform: translateY(-3px) scale(1.03);
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(6,182,212,0.05));
+  box-shadow: 0 10px 30px rgba(99,102,241,0.08);
+}
+.menu-link:hover .icon{
+  transform: scale(1.08) rotate(6deg);
+  color: var(--accent-end);
+}
+.menu-link:hover .chev{
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* focus-visible for keyboard nav */
+.menu-link:focus{
+  outline: 2px solid rgba(124,58,237,0.14);
+  outline-offset: 2px;
+}
+
+/* small button styles from your CSS (kept compatible) */
+.btn{
+  padding:8px 12px;
+  border-radius:8px;
+  border:2px solid #0f172a;
+  background: transparent;
+  color:#e6eef8;
+  cursor:pointer;
+  font-weight:600;
+  transition: background-color .18s ease, color .18s ease, transform .08s ease;
+}
+.btn:hover{ transform: translateY(-2px); }
+.btn.primary{
+  background:linear-gradient(90deg,var(--accent-start),var(--accent-end));
+  color:black;
+  border-color:transparent;
+}
+.btn.outline{
+  background:transparent;
+  color:#e6eef8;
+}
+.btn.small{ padding:6px 8px; font-size:0.8rem; border-radius:6px; }
+
+/* Footer */
+.sidebar-footer{ margin-top:auto; font-size:0.8rem; color:var(--muted); }
+
+/* Responsive tweaks */
+@media (max-width: 768px){
+  .sidebar{ width: 80%; max-width:320px; position: fixed; left: 0; top:0; bottom:0; transform: translateX(-110%); transition: transform .25s ease; z-index:50; }
+  .sidebar.open{ transform: translateX(0); }
+  .icon-wrap{ width:40px; height:40px; }
+  .icon{ width:18px; height:18px; }
+}
+
+/* small utility if you want a compact mode (only icons) */
+.sidebar.compact .link-text,
+.sidebar.compact .link-sub,
+.sidebar.compact .chev,
+.sidebar.compact .badge{
+  display:none;
+}
+.sidebar.compact .icon-wrap{ width:44px; height:44px; margin: 6px auto; }
+
+/* Overlay for mobile when sidebar open */
+.overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 40;
+}
+
+/* Simple topbar for mobile */
+.topbar{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, rgba(10,10,10,0.85), rgba(10,10,10,0.6));
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+.topbar-btn{
+  width: 36px;
+  height: 36px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  color: #e6eef8;
+}
+.topbar-title{
+  font-weight: 700;
+}
+.topbar-spacer{ width: 36px; height: 36px; }
