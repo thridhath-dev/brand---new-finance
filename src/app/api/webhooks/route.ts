@@ -1,8 +1,7 @@
 // app/api/webhooks/route.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { prisma } from '../../../app/lib/prisma';
- // uncomment if you want to upsert
+import { prisma } from '../../../lib/prisma'; // uncomment if you want to upsert
 
 function safeGetEmailFromPayload(evt: any): string | null {
   // Try multiple likely paths that Clerk or other providers might use.

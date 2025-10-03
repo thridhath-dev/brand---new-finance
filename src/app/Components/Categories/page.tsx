@@ -1,141 +1,194 @@
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
+
+interface Category {
+  id: string;
+  name: string;
+  type: 'EXPENSE' | 'INCOME';
+  color: string;
+}
 
 export default function Categories() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    name: '',
+    type: '',
+    color: '#3b82f6'
+  });
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/categories');
+      if (response.ok) {
+        const data = await response.json();
+        setCategories(data);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/categories', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const newCategory = await response.json();
+        setCategories([...categories, newCategory]);
+        setFormData({ name: '', type: '', color: '#3b82f6' });
+      }
+    } catch (error) {
+      console.error('Error creating category:', error);
+    }
+  };
+
+  const expenseCategories = categories.filter(cat => cat.type === 'EXPENSE');
+  const incomeCategories = categories.filter(cat => cat.type === 'INCOME');
+
+  if (loading) {
+    return (
+      <section className="space-y-6">
+        <header>
+          <h1 className="text-2xl font-semibold">Categories</h1>
+          <p className="text-white/60">Loading categories...</p>
+        </header>
+      </section>
+    );
+  }
+
   return (
-    <>
-        <div className="bg-white rounded-xl shadow-lg p-8 border border-slate-200">
-          <h2 className="text-3xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-            <span className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center text-white">
-              📋
-            </span>
-            Category Management
-          </h2>
+    <section className="space-y-6">
+      <header>
+        <h1 className="text-2xl font-semibold">Categories</h1>
+        <p className="text-white/60">Manage your expense and income categories.</p>
+      </header>
 
-          {/* Add New Category Form */}
-          <div className="bg-slate-50 rounded-lg p-6 mb-8 border-2 border-slate-200">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Add New Category</h3>
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Category Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g., Groceries"
-                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-green-500 transition-colors"
-                  />
-                </div>
+      {/* Add New Category Form */}
+      <div className="panel">
+        <div className="panel-title">Add New Category</div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Category Name
+              </label>
+              <input
+                type="text"
+                placeholder="e.g., Groceries"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="input w-full"
+                required
+              />
+            </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Type
-                  </label>
-                  <select className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-green-500 transition-colors bg-white text-slate-800">
-                    <option value="">Select Type</option>
-                    <option value="expense">Expense</option>
-                    <option value="revenue">Revenue</option>
-                  </select>
-                </div>
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Type
+              </label>
+              <select 
+                value={formData.type}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                className="input w-full"
+                required
+              >
+                <option value="">Select Type</option>
+                <option value="EXPENSE">Expense</option>
+                <option value="INCOME">Income</option>
+              </select>
+            </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Color
-                  </label>
-                  <input
-                    type="color"
-                    defaultValue="#3b82f6"
-                    className="w-full h-12 px-2 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-green-500 transition-colors cursor-pointer"
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors shadow-lg"
-                >
-                  Add Category
-                </button>
-              </div>
-            </form>
-          </div>
-
-          {/* Category List */}
-          <div>
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Existing Categories</h3>
-            <div className="space-y-3">
-              {/* Expense Categories */}
-              <div className="bg-red-50 rounded-lg p-4 border-2 border-red-200">
-                <h4 className="font-bold text-red-800 mb-3 flex items-center gap-2">
-                  <span className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">-</span>
-                  Expense Categories
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-red-200">
-                    <div className="flex items-center gap-3">
-                      <span className="w-4 h-4 rounded-full bg-blue-500"></span>
-                      <span className="font-medium text-slate-800">Food & Dining</span>
-                    </div>
-                    <button className="text-red-500 hover:text-red-700 font-bold">×</button>
-                  </div>
-                  <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-red-200">
-                    <div className="flex items-center gap-3">
-                      <span className="w-4 h-4 rounded-full bg-purple-500"></span>
-                      <span className="font-medium text-slate-800">Transportation</span>
-                    </div>
-                    <button className="text-red-500 hover:text-red-700 font-bold">×</button>
-                  </div>
-                  <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-red-200">
-                    <div className="flex items-center gap-3">
-                      <span className="w-4 h-4 rounded-full bg-yellow-500"></span>
-                      <span className="font-medium text-slate-800">Utilities</span>
-                    </div>
-                    <button className="text-red-500 hover:text-red-700 font-bold">×</button>
-                  </div>
-                  <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-red-200">
-                    <div className="flex items-center gap-3">
-                      <span className="w-4 h-4 rounded-full bg-pink-500"></span>
-                      <span className="font-medium text-slate-800">Entertainment</span>
-                    </div>
-                    <button className="text-red-500 hover:text-red-700 font-bold">×</button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Revenue Categories */}
-              <div className="bg-green-50 rounded-lg p-4 border-2 border-green-200">
-                <h4 className="font-bold text-green-800 mb-3 flex items-center gap-2">
-                  <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">+</span>
-                  Revenue Categories
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-green-200">
-                    <div className="flex items-center gap-3">
-                      <span className="w-4 h-4 rounded-full bg-emerald-500"></span>
-                      <span className="font-medium text-slate-800">Salary</span>
-                    </div>
-                    <button className="text-red-500 hover:text-red-700 font-bold">×</button>
-                  </div>
-                  <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-green-200">
-                    <div className="flex items-center gap-3">
-                      <span className="w-4 h-4 rounded-full bg-teal-500"></span>
-                      <span className="font-medium text-slate-800">Freelance</span>
-                    </div>
-                    <button className="text-red-500 hover:text-red-700 font-bold">×</button>
-                  </div>
-                  <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-green-200">
-                    <div className="flex items-center gap-3">
-                      <span className="w-4 h-4 rounded-full bg-cyan-500"></span>
-                      <span className="font-medium text-slate-800">Investments</span>
-                    </div>
-                    <button className="text-red-500 hover:text-red-700 font-bold">×</button>
-                  </div>
-                </div>
-              </div>
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2">
+                Color
+              </label>
+              <input
+                type="color"
+                value={formData.color}
+                onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                className="w-full h-12 px-2 border-2 border-white/20 rounded-lg focus:outline-none focus:border-purple-500 transition-colors cursor-pointer bg-white/5"
+              />
             </div>
           </div>
-        </div>
-          </>
+
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="btn primary"
+            >
+              Add Category
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Category List */}
+      <div className="space-y-4">
+        {/* Expense Categories */}
+        {expenseCategories.length > 0 && (
+          <div className="panel">
+            <div className="panel-title flex items-center gap-2">
+              <span className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">-</span>
+              Expense Categories
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {expenseCategories.map((category) => (
+                <div key={category.id} className="flex items-center justify-between bg-white/5 p-3 rounded-lg border border-white/10">
+                  <div className="flex items-center gap-3">
+                    <span 
+                      className="w-4 h-4 rounded-full" 
+                      style={{ backgroundColor: category.color }}
+                    ></span>
+                    <span className="font-medium text-white">{category.name}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Income Categories */}
+        {incomeCategories.length > 0 && (
+          <div className="panel">
+            <div className="panel-title flex items-center gap-2">
+              <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">+</span>
+              Income Categories
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {incomeCategories.map((category) => (
+                <div key={category.id} className="flex items-center justify-between bg-white/5 p-3 rounded-lg border border-white/10">
+                  <div className="flex items-center gap-3">
+                    <span 
+                      className="w-4 h-4 rounded-full" 
+                      style={{ backgroundColor: category.color }}
+                    ></span>
+                    <span className="font-medium text-white">{category.name}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {categories.length === 0 && (
+          <div className="panel text-center py-8">
+            <p className="text-white/60">No categories yet. Create your first category above!</p>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
