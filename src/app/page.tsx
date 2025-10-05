@@ -11,8 +11,8 @@ return (
     <div className="brand">Wigoh</div>
     <div className="header-right">
       <nav className='thri'>
-        <Link href="/sign-in">Sign in</Link>
-        <Link href="/sign-up">Sign up</Link>
+        <Link href="/Sign-in">Sign in</Link>
+        <Link href="/Sign-up">Sign up</Link>
       </nav>
       <div className="auth-state">
         <SignedIn>

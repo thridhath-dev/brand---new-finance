@@ -20,7 +20,7 @@ return (
 <header className="flex items-center justify-between">
 <div>
 <h1 className="text-2xl font-semibold">Alerts</h1>
-<p className="text-white/60">Budget and anomaly notifications.</p>
+<p className="text-gray-600">Budget and anomaly notifications.</p>
 </div>
 <button className="btn outline" onClick={markAllRead}>Mark all read</button>
 </header>
@@ -31,7 +31,7 @@ return (
 <li key={a.id} className={`panel flex items-center justify-between ${a.read ? "opacity-60" : ""}`}>
 <div>
 <div className="panel-title capitalize">{a.type.replace("_", " ")}</div>
-<div className="text-white/80">{a.message}</div>
+<div className="text-gray-700">{a.message}</div>
 </div>
 {!a.read && <span className="badge">New</span>}
 </li>

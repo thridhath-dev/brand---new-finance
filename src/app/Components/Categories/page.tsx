@@ -63,7 +63,7 @@ export default function Categories() {
       <section className="space-y-6">
         <header>
           <h1 className="text-2xl font-semibold">Categories</h1>
-          <p className="text-white/60">Loading categories...</p>
+          <p className="text-gray-600">Loading categories...</p>
         </header>
       </section>
     );
@@ -73,7 +73,7 @@ export default function Categories() {
     <section className="space-y-6">
       <header>
         <h1 className="text-2xl font-semibold">Categories</h1>
-        <p className="text-white/60">Manage your expense and income categories.</p>
+        <p className="text-gray-600">Manage your expense and income categories.</p>
       </header>
 
       {/* Add New Category Form */}
@@ -82,7 +82,7 @@ export default function Categories() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Category Name
               </label>
               <input
@@ -96,7 +96,7 @@ export default function Categories() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Type
               </label>
               <select 
@@ -112,14 +112,14 @@ export default function Categories() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Color
               </label>
               <input
                 type="color"
                 value={formData.color}
                 onChange={(e) => setFormData({ ...formData, color: e.target.value })}
-                className="w-full h-12 px-2 border-2 border-white/20 rounded-lg focus:outline-none focus:border-purple-500 transition-colors cursor-pointer bg-white/5"
+                className="w-full h-12 px-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-colors cursor-pointer bg-gray-50"
               />
             </div>
           </div>
@@ -141,18 +141,18 @@ export default function Categories() {
         {expenseCategories.length > 0 && (
           <div className="panel">
             <div className="panel-title flex items-center gap-2">
-              <span className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">-</span>
+              <span className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-gray-700 text-xs">-</span>
               Expense Categories
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {expenseCategories.map((category) => (
-                <div key={category.id} className="flex items-center justify-between bg-white/5 p-3 rounded-lg border border-white/10">
+                <div key={category.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-200">
                   <div className="flex items-center gap-3">
                     <span 
                       className="w-4 h-4 rounded-full" 
                       style={{ backgroundColor: category.color }}
                     ></span>
-                    <span className="font-medium text-white">{category.name}</span>
+                    <span className="font-medium text-gray-700">{category.name}</span>
                   </div>
                 </div>
               ))}
@@ -164,18 +164,18 @@ export default function Categories() {
         {incomeCategories.length > 0 && (
           <div className="panel">
             <div className="panel-title flex items-center gap-2">
-              <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">+</span>
+              <span className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-gray-700 text-xs">+</span>
               Income Categories
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {incomeCategories.map((category) => (
-                <div key={category.id} className="flex items-center justify-between bg-white/5 p-3 rounded-lg border border-white/10">
+                <div key={category.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-200">
                   <div className="flex items-center gap-3">
                     <span 
                       className="w-4 h-4 rounded-full" 
                       style={{ backgroundColor: category.color }}
                     ></span>
-                    <span className="font-medium text-white">{category.name}</span>
+                    <span className="font-medium text-gray-700">{category.name}</span>
                   </div>
                 </div>
               ))}
@@ -185,7 +185,7 @@ export default function Categories() {
 
         {categories.length === 0 && (
           <div className="panel text-center py-8">
-            <p className="text-white/60">No categories yet. Create your first category above!</p>
+            <p className="text-gray-600">No categories yet. Create your first category above!</p>
           </div>
         )}
       </div>

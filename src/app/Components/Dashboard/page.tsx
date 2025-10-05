@@ -48,7 +48,7 @@ export default function DashboardPage() {
       <section className="space-y-6">
         <header>
           <h1 className="text-2xl font-semibold">Dashboard</h1>
-          <p className="text-white/60">Loading dashboard data...</p>
+          <p className="text-gray-600">Loading dashboard data...</p>
         </header>
       </section>
     );
@@ -58,7 +58,7 @@ export default function DashboardPage() {
     <section className="space-y-6">
       <header>
         <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-white/60">Overview of key metrics.</p>
+        <p className="text-gray-600">Overview of key metrics.</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -125,11 +125,11 @@ export default function DashboardPage() {
                       ) : '-'}
                     </td>
                     <td>
-                      <span className={`chip ${transaction.type === 'INCOME' ? 'text-green-400' : 'text-red-400'}`}>
+                      <span className={`chip ${transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-600'}`}>
                         {transaction.type}
                       </span>
                     </td>
-                    <td className={transaction.type === 'INCOME' ? 'text-green-400' : 'text-red-400'}>
+                    <td className={transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-600'}>
                       {transaction.type === 'INCOME' ? '+' : '-'}₹ {Number(transaction.amount).toLocaleString()}
                     </td>
                   </tr>
@@ -139,7 +139,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="text-center py-8">
-            <p className="text-white/60">No transactions yet. Start by adding some transactions!</p>
+            <p className="text-gray-600">No transactions yet. Start by adding some transactions!</p>
           </div>
         )}
       </div>

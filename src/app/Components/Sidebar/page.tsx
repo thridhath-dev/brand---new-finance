@@ -71,7 +71,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar-shell relative">
       {/* Sidebar */}
-      <aside className={`sidebar w-60 bg-black/90 min-h-screen flex flex-col text-white ${isOpen ? "open" : ""}`} aria-expanded={isOpen}>
+      <aside className={`sidebar w-60 bg-white min-h-screen flex flex-col text-gray-700 ${isOpen ? "open" : ""}`} aria-expanded={isOpen}>
         {/* Title */}
         <div className="px-4 pt-6 pb-2">
           <h2 className="finance">Finance Tracker</h2>
@@ -153,7 +153,7 @@ export default function Sidebar() {
       ) : null}
 
       {/* Main Content Area */}
-      <main className="bg-gray-900 text-white overflow-auto">
+      <main className="bg-gray-50 text-gray-800 overflow-auto">
         {/* Topbar (mobile) */}
         <div className="topbar md:hidden">
           <button className="topbar-btn" aria-label="Open sidebar" onClick={() => setIsOpen(true)}>

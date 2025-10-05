@@ -91,7 +91,7 @@ export default function Transaction() {
       <section className="space-y-6">
         <header>
           <h1 className="text-2xl font-semibold">Transactions</h1>
-          <p className="text-white/60">Loading transactions...</p>
+          <p className="text-gray-600">Loading transactions...</p>
         </header>
       </section>
     );
@@ -101,7 +101,7 @@ export default function Transaction() {
     <section className="space-y-6">
       <header>
         <h1 className="text-2xl font-semibold">Transactions</h1>
-        <p className="text-white/60">Add and manage your financial transactions.</p>
+        <p className="text-gray-600">Add and manage your financial transactions.</p>
       </header>
 
       {/* Transaction Entry Form */}
@@ -111,7 +111,7 @@ export default function Transaction() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Transaction Type */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Transaction Type
               </label>
               <select 
@@ -128,7 +128,7 @@ export default function Transaction() {
 
             {/* Amount */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Amount
               </label>
               <input
@@ -144,7 +144,7 @@ export default function Transaction() {
 
             {/* Category */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Category
               </label>
               <select 
@@ -163,7 +163,7 @@ export default function Transaction() {
 
             {/* Date */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Date
               </label>
               <input
@@ -178,7 +178,7 @@ export default function Transaction() {
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-semibold text-white mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Description
             </label>
             <textarea
@@ -247,11 +247,11 @@ export default function Transaction() {
                       ) : '-'}
                     </td>
                     <td>
-                      <span className={`chip ${transaction.type === 'INCOME' ? 'text-green-400' : 'text-red-400'}`}>
+                      <span className={`chip ${transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-600'}`}>
                         {transaction.type}
                       </span>
                     </td>
-                    <td className={transaction.type === 'INCOME' ? 'text-green-400' : 'text-red-400'}>
+                    <td className={transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-600'}>
                       {transaction.type === 'INCOME' ? '+' : '-'}₹ {Number(transaction.amount).toLocaleString()}
                     </td>
                   </tr>
@@ -261,7 +261,7 @@ export default function Transaction() {
           </div>
         ) : (
           <div className="text-center py-8">
-            <p className="text-white/60">No transactions yet. Add your first transaction above!</p>
+            <p className="text-gray-600">No transactions yet. Add your first transaction above!</p>
           </div>
         )}
       </div>

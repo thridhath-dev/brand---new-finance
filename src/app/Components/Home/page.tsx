@@ -45,7 +45,7 @@ export default function Home() {
       <section className="space-y-6">
         <header>
           <h1 className="text-2xl font-semibold">Welcome back 👋</h1>
-          <p className="text-white/60">Loading your financial snapshot...</p>
+          <p className="text-gray-600">Loading your financial snapshot...</p>
         </header>
       </section>
     );
@@ -55,7 +55,7 @@ export default function Home() {
     <section className="space-y-6">
       <header>
         <h1 className="text-2xl font-semibold">Welcome back 👋</h1>
-        <p className="text-white/60">Here's a quick snapshot of your finances.</p>
+        <p className="text-gray-600">Here's a quick snapshot of your finances.</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -87,7 +87,7 @@ export default function Home() {
       <div className="panel">
         <div className="panel-title">Recent Activity</div>
         {data?.recentTransactions && data.recentTransactions.length > 0 ? (
-          <ul className="divide-y divide-white/10">
+          <ul className="divide-y divide-gray-200">
             {data.recentTransactions.map((transaction) => (
               <li key={transaction.id} className="row">
                 <div className="flex items-center gap-2">
@@ -99,7 +99,7 @@ export default function Home() {
                   )}
                   <span>{transaction.category?.name || transaction.description || 'Transaction'}</span>
                 </div>
-                <span className={transaction.type === 'INCOME' ? 'text-green-400' : 'text-red-400'}>
+                <span className={transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-600'}>
                   {transaction.type === 'INCOME' ? '+' : '-'}₹ {Number(transaction.amount).toLocaleString()}
                 </span>
               </li>
@@ -107,7 +107,7 @@ export default function Home() {
           </ul>
         ) : (
           <div className="text-center py-8">
-            <p className="text-white/60">No recent transactions. Start by adding some transactions!</p>
+            <p className="text-gray-600">No recent transactions. Start by adding some transactions!</p>
           </div>
         )}
       </div>
